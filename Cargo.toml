@@ -1,0 +1,15 @@
+[package]
+name = "rest-api"
+version = "0.1.0"
+authors = ["Nick <niiick@live.se>"]
+
+[dependencies]
+serde = "1.0"
+serde_derive = "1.0"
+serde_json = "1.0"
+mongodb = "0.3.10"
+bson = "0.12.2"
+actix-web = "0.7"
+bcrypt = "0.2"
+jsonwebtoken = "*"
+chrono = "0.4"
