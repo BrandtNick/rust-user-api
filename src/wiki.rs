@@ -16,14 +16,19 @@ use mongodb::db::ThreadedDatabase;
 
 use auth;
 
+#[derive(Serialize, Deserialize, Debug)]
+pub struct Content {
+    subtitle: String,
+    description: String,
+    article: String,
+    references: String
+}
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Wiki {
-    page: String,
     title: String,
-    subtitle: String,
-    article: String,
-    references: String
+    description: String,
+    content: Content,
 }
 
 pub fn wiki_collection() -> mongodb::coll::Collection {
@@ -32,8 +37,14 @@ pub fn wiki_collection() -> mongodb::coll::Collection {
     client.db("nexus").collection("wiki")
 }
 
-pub fn post_wiki_page(wiki: Json<Wiki>) -> Result<String> {
-
+pub fn post_wiki(wiki: Json<Wiki>) -> Result<String> {
+let coll = wiki_collection();
+    coll.insert_one(doc!{ 
+        "title": &wiki.title,
+        "subtitle": &wiki.subtitle,
+        "content": &wiki.content,
+    }, None).unwrap();
+    Ok(format!("Added Wiki: {}", &wiki.title))
 }
 
 pub fn post_wiki_article(wiki: Json<Wiki>) -> Result<String> {
