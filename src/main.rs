@@ -16,14 +16,18 @@ extern crate jsonwebtoken as jwt;
 use actix_web::{server, http, App};
 
 mod user;
+mod wiki;
 mod auth;
 
 fn main() {
-    println!("%%% REST API Initiated %%%");
+    let host = "http://localhost:8000";
+
+    println!("Started API service at: {}", host);
     server::new(|| App::new()
         .resource("/user/create", |r| r.method(http::Method::POST).with(user::post_user))
-        .resource("/user/auth", |r| r.method(http::Method::POST).with(user::login_user)))
-        .bind("localhost:8000")
+        .resource("/user/auth", |r| r.method(http::Method::POST).with(user::login_user))
+        .resource("/wiki/create", |r| r.method(http::Method::POST).with(wiki::post_wiki)))
+        .bind(host)
         .unwrap()
         .run();
 }

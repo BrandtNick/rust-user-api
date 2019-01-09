@@ -41,16 +41,20 @@ pub fn post_wiki(wiki: Json<Wiki>) -> Result<String> {
 let coll = wiki_collection();
     coll.insert_one(doc!{ 
         "title": &wiki.title,
-        "subtitle": &wiki.subtitle,
+        "description": &wiki.description,
         "content": &wiki.content,
     }, None).unwrap();
     Ok(format!("Added Wiki: {}", &wiki.title))
 }
 
-pub fn post_wiki_article(wiki: Json<Wiki>) -> Result<String> {
+/* pub fn post_wiki_article(wiki: Json<Wiki>) -> Result<String> {
+    Ok!(format!("posted article"))
+}
 
+pub fn get_wikis(wiki: Json<Wiki>) -> Result<String> {
+    
 }
 
 pub fn get_wiki(wiki: Json<Wiki>) -> Result<String> {
     
-}
+} */
